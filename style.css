@@ -37,6 +37,20 @@ header {
   align-items: center;
 }
 
+.white {
+  color: #00007c;
+  background-color: #fff;
+}
+
+.blu {
+  color: #fff;
+  background-color: #00007c;
+}
+
+.gold {
+  color: #e6d48a;
+}
+
 /* --- MAIN LAYOUT --- */
 .content {
   min-height: 100vh;
