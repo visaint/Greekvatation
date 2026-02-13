@@ -102,13 +102,14 @@ h1 {
 .img_container {
   position: relative;
   width: 100%;
-  max-width: 600px;
+  max-width: 1400px; /* Increased to fit 4 images: (280px * 4) + (20px gaps * 3) = 1180px + buffer */
   height: 350px;
   margin-bottom: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
   perspective: 1000px;
+  overflow: visible; /* Allow images to be visible outside container */
 }
 
 .img_stack {
@@ -119,6 +120,7 @@ h1 {
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  overflow: visible; /* Ensure images aren't clipped */
 }
 
 .img_stack img {
@@ -319,6 +321,19 @@ h1 {
   }
 }
 
+/* --- FOURTH SECTION (8 IMAGES) --- */
+.sec4-images {
+  max-width: 1300px; /* Increased to fit 4 images spread out: (240px * 4) + (30px gaps * 3) */
+  height: 750px; /* Increased to fit 2 rows with more spacing: (300px * 2) + 150px gap */
+  overflow: visible;
+  margin-bottom: 80px; /* More bottom margin for spacing */
+}
+
+.sec4-images .img_stack img {
+  width: 240px;
+  height: 300px;
+}
+
 /* --- MOBILE OPTIMIZATION --- */
 @media (max-width: 768px) {
   header {
@@ -337,6 +352,10 @@ h1 {
     align-items: center;
   }
 
+  #wrap {
+    line-height: 5vh;
+  }
+
   .bottom_text {
     margin-top: 10vh;
   }
@@ -346,9 +365,10 @@ h1 {
   }
 
   .img_container {
-    height: 300px;
+    height: 700px; /* Increased for 2x2 grid on mobile */
     margin: 30px 0;
     max-width: 100%;
+    overflow: visible;
   }
 
   .img_stack img {
@@ -377,6 +397,18 @@ h1 {
   .confetti {
     width: 6px;
     height: 10px;
+  }
+
+  /* Fourth section specific - 8 image grid on mobile */
+  .sec4-images {
+    height: 1100px; /* Increased for 2x4 grid (4 rows) with more spacing */
+    overflow: visible;
+    margin-bottom: 60px;
+  }
+
+  .sec4-images .img_stack img {
+    width: 160px;
+    height: 200px;
   }
 }
 
