@@ -1,10 +1,73 @@
 <!doctype html>
-<html lang="en">
+<html lang="mk">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Покана</title>
+    <title>Покана за Роденден - Грчка Вечер</title>
+    <meta
+      name="description"
+      content="Поканети сте на магична грчка роденденска забава! Сабота 28 Февруари кај Тамара."
+    />
+
+    <!-- Favicons -->
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="favicon/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="favicon/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="favicon/favicon-16x16.png"
+    />
+    <link rel="manifest" href="favicon/site.webmanifest" />
+    <link rel="shortcut icon" href="favicon/favicon.ico" />
+
+    <!-- Open Graph / Facebook Meta Tags -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://tamarakani.vercel.app/" />
+    <meta property="og:title" content="Поканети Сте На Роденден! 🎉" />
+    <meta
+      property="og:description"
+      content="Магична грчка вечер - Сабота 28.03 кај Тамара. Бело-плава облека задолжителна! 🇬🇷"
+    />
+    <meta
+      property="og:image"
+      content="https://tamarakani.vercel.app/preview.png"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Покана за роденден - Грчка вечер" />
+
+    <!-- Twitter Meta Tags -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://tamarakani.vercel.app/" />
+    <meta property="twitter:title" content="Поканети Сте На Роденден! 🎉" />
+    <meta
+      property="twitter:description"
+      content="Магична грчка вечер - Сабота 28.03 кај Тамара. Бело-плава облека задолжителна! 🇬🇷"
+    />
+    <meta
+      property="twitter:image"
+      content="https://tamarakani.vercel.app/preview.png"
+    />
+
+    <!-- Instagram-specific optimizations -->
+    <meta property="og:image:type" content="image/png" />
+    <meta name="theme-color" content="#3E4DB3" />
+
     <link rel="stylesheet" href="./style.css" />
+    <!-- Preload critical images for faster loading -->
+    <link rel="preload" as="image" href="/preview.png" />
+    <link rel="preload" as="image" href="images/alex-greet.webp" />
+    <link rel="preload" as="image" href="images/pillairs.webp" />
   </head>
 
   <body>
@@ -18,8 +81,8 @@
       <section class="content first-section">
         <div class="text-wrapper">
           <h1>
-            <span>Поканети Сте</span><br />
-            <span class="highlight-trigger photographer">На Исторична</span
+            <span>Поканети</span><br />
+            <span class="highlight-trigger photographer">Сте На Исторична</span
             ><br />
             <span>Роденденска Забава</span>
           </h1>
@@ -27,23 +90,23 @@
 
         <div class="img_container sec1-images">
           <div class="img_stack">
-            <img src="images/alex-greet.webp" alt="Greeting" />
-            <img src="images/pillairs.webp" alt="Pillars" />
-            <img src="images/parthenon.webp" alt="Parthenon" />
-            <img src="images/mount-village.webp" alt="Village" />
+            <img src="images/alex-greet.webp" alt="Greeting" loading="eager" />
+            <img src="images/pillairs.webp" alt="Pillars" loading="eager" />
+            <img src="images/parthenon.webp" alt="Parthenon" loading="lazy" />
+            <img src="images/mount-village.webp" alt="Village" loading="lazy" />
           </div>
           <div class="instruction-hint"></div>
         </div>
 
         <div class="bottom_text">
           <h5>САБОТА 28ми Февруари</h5>
+          <h5>Во Мојот Дом</h5>
         </div>
       </section>
 
       <section class="transition-section">
         <div class="transition-text">
           <h2>Не-Обична Забава</h2>
-          <h2>туку</h2>
         </div>
       </section>
 
@@ -58,14 +121,15 @@
 
         <div class="img_container sec2-images">
           <div class="img_stack">
-            <img src="images/magic.webp" alt="Magic" />
-            <img src="images/magic2.webp" alt="Magic 2" />
-            <img src="images/party-head.webp" alt="Party" />
-            <img src="images/head1.webp" alt="Head" />
+            <img src="images/magic.webp" alt="Magic" loading="lazy" />
+            <img src="images/magic2.webp" alt="Magic 2" loading="lazy" />
+            <img src="images/party-head.webp" alt="Party" loading="lazy" />
+            <img src="images/head1.webp" alt="Head" loading="lazy" />
           </div>
         </div>
       </section>
-      <section class="content second-section">
+
+      <section class="content third-section">
         <div class="text-wrapper">
           <h1>
             <span>Очекувајте узо, тѕаѕиќи</span><br />
@@ -75,12 +139,12 @@
           </h1>
         </div>
 
-        <div class="img_container sec2-images">
+        <div class="img_container sec3-images">
           <div class="img_stack">
-            <img src="images/stamp.webp" alt="Magic" />
-            <img src="images/tz.webp" alt="Magic 2" />
-            <img src="images/uzo.webp" alt="Party" />
-            <img src="images/olives.webp" alt="Head" />
+            <img src="images/stamp.webp" alt="Stamp" loading="lazy" />
+            <img src="images/tz.webp" alt="Tzatziki" loading="lazy" />
+            <img src="images/uzo.webp" alt="Ouzo" loading="lazy" />
+            <img src="images/olives.webp" alt="Olives" loading="lazy" />
           </div>
         </div>
       </section>
