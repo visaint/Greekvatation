@@ -9,6 +9,130 @@ $(window).on("load", () => {
   $(".text-wrapper h1 span, .bottom_text h5, .transition-text h2").lettering();
 
   // =========================================================
+  // BALLOONS AND SPARKLES SETUP
+  // =========================================================
+
+  // Create balloon container
+  const balloonContainer = $('<div class="balloon-container"></div>');
+  $("body").append(balloonContainer);
+
+  // Create sparkle container
+  const sparkleContainer = $('<div class="sparkle-container"></div>');
+  $("body").append(sparkleContainer);
+
+  // Function to create floating balloons
+  function createBalloon() {
+    const balloon = $('<div class="balloon"></div>');
+    const balloonType = Math.floor(Math.random() * 3) + 1;
+    balloon.addClass(`balloon-${balloonType}`);
+
+    // Random horizontal position
+    const startX = Math.random() * window.innerWidth;
+    balloon.css({
+      left: startX + "px",
+      bottom: "-60px",
+    });
+
+    // Random drift and rotation for variety
+    const drift = (Math.random() - 0.5) * 200;
+    const rotation = (Math.random() - 0.5) * 90;
+    balloon.css({
+      "--drift": drift + "px",
+      "--rotation": rotation + "deg",
+    });
+
+    balloonContainer.append(balloon);
+
+    // Animate
+    gsap.to(balloon[0], {
+      duration: 8 + Math.random() * 4,
+      ease: "none",
+      opacity: 0.9,
+      onComplete: () => balloon.remove(),
+    });
+
+    balloon.css(
+      "animation",
+      `float-up ${8 + Math.random() * 4}s linear forwards`,
+    );
+  }
+
+  // Function to create sparkles
+  function createSparkle(x, y) {
+    const sparkle = $('<div class="sparkle"></div>');
+    sparkle.css({
+      left: x + "px",
+      top: y + "px",
+    });
+
+    sparkleContainer.append(sparkle);
+
+    // Animate sparkle
+    gsap.to(sparkle[0], {
+      duration: 1.5,
+      ease: "power2.out",
+      onComplete: () => sparkle.remove(),
+    });
+
+    sparkle.css("animation", "sparkle-twinkle 1.5s ease-out forwards");
+  }
+
+  // Function to create confetti burst
+  function createConfettiBurst(x, y, count = 15) {
+    const colors = ["#0047ab", "#00a3e0", "#3e4db3", "#ffd700", "#ffffff"];
+
+    for (let i = 0; i < count; i++) {
+      const confetti = $('<div class="confetti"></div>');
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      const angle = (Math.PI * 2 * i) / count;
+      const velocity = 50 + Math.random() * 100;
+      const duration = 1 + Math.random() * 1;
+
+      confetti.css({
+        left: x + "px",
+        top: y + "px",
+        background: color,
+      });
+
+      sparkleContainer.append(confetti);
+
+      gsap.to(confetti[0], {
+        x: Math.cos(angle) * velocity,
+        y: Math.sin(angle) * velocity + 300,
+        rotation: 720,
+        opacity: 0,
+        duration: duration,
+        ease: "power2.out",
+        onComplete: () => confetti.remove(),
+      });
+    }
+  }
+
+  // Generate balloons periodically
+  function startBalloonAnimation() {
+    createBalloon();
+    const nextBalloon = 2000 + Math.random() * 3000; // Every 2-5 seconds
+    setTimeout(startBalloonAnimation, nextBalloon);
+  }
+
+  // Generate sparkles randomly
+  function createRandomSparkles() {
+    if (Math.random() > 0.7) {
+      // 30% chance
+      const x = Math.random() * window.innerWidth;
+      const y = Math.random() * window.innerHeight;
+      createSparkle(x, y);
+    }
+    setTimeout(createRandomSparkles, 1000 + Math.random() * 2000);
+  }
+
+  // Start animations after a short delay
+  setTimeout(() => {
+    startBalloonAnimation();
+    createRandomSparkles();
+  }, 1000);
+
+  // =========================================================
   // 1. INTRO ANIMATION (First Section ONLY)
   // =========================================================
   const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
@@ -25,7 +149,7 @@ $(window).on("load", () => {
         y: 0,
         opacity: 1,
         scale: 1,
-        rotation: (i) => (i - 1.5) * 5, // Slight fan rotation: -7.5, -2.5, 2.5, 7.5
+        rotation: (i) => (i - 1.5) * 5,
         duration: 1.2,
         stagger: 0.1,
         ease: "back.out(1.7)",
@@ -39,6 +163,8 @@ $(window).on("load", () => {
       "-=0.8",
     )
     .add(() => {
+      // Confetti burst on first load
+      createConfettiBurst(window.innerWidth / 2, window.innerHeight / 2, 20);
       // Auto-expand first section images after animation completes
       autoExpandImages(".sec1-images");
     }, `+=${AUTO_EXPAND_DELAY}`);
@@ -55,6 +181,14 @@ $(window).on("load", () => {
       scrollTrigger: {
         trigger: ".transition-section",
         start: "top 75%",
+        onEnter: () => {
+          // Mini confetti burst when transition appears
+          createConfettiBurst(
+            window.innerWidth / 2,
+            window.innerHeight / 3,
+            10,
+          );
+        },
       },
       x: 0,
       opacity: 1,
@@ -67,8 +201,16 @@ $(window).on("load", () => {
   let sl = gsap.timeline({
     scrollTrigger: {
       trigger: ".second-section",
-      start: "top 60%", // Starts when section is 60% into view
+      start: "top 60%",
       onEnter: () => {
+        // Sparkles when section enters
+        for (let i = 0; i < 5; i++) {
+          setTimeout(() => {
+            const x = Math.random() * window.innerWidth;
+            const y = window.innerHeight * 0.4 + Math.random() * 200;
+            createSparkle(x, y);
+          }, i * 100);
+        }
         // Auto-expand after animation completes
         setTimeout(
           () => autoExpandImages(".sec2-images"),
@@ -103,6 +245,14 @@ $(window).on("load", () => {
       trigger: ".third-section",
       start: "top 60%",
       onEnter: () => {
+        // Sparkles when section enters
+        for (let i = 0; i < 5; i++) {
+          setTimeout(() => {
+            const x = Math.random() * window.innerWidth;
+            const y = window.innerHeight * 0.5 + Math.random() * 200;
+            createSparkle(x, y);
+          }, i * 100);
+        }
         // Auto-expand after animation completes
         setTimeout(
           () => autoExpandImages(".sec3-images"),
@@ -148,18 +298,17 @@ $(window).on("load", () => {
 
     // EXPAND TO GRID
     gsap.to(images, {
-      rotation: (i) => (i % 2 === 0 ? -2 : 2), // Straighten up slightly
+      rotation: (i) => (i % 2 === 0 ? -2 : 2),
       x: (i) => {
-        // Create a horizontal spread or 2x2 grid based on screen size
-        if (isMobile) return i % 2 === 0 ? -60 : 60; // 2 columns tight
-        return (i - 1.5) * 160; // Spread horizontally on desktop
+        if (isMobile) return i % 2 === 0 ? -60 : 60;
+        return (i - 1.5) * 160;
       },
       y: (i) => {
-        if (isMobile) return i < 2 ? -80 : 80; // 2 rows
+        if (isMobile) return i < 2 ? -80 : 80;
         return 0;
       },
       scale: 1.1,
-      zIndex: (i) => 10 + i, // Ensure layering is correct
+      zIndex: (i) => 10 + i,
       duration: 0.6,
       ease: "power2.out",
     });
@@ -188,7 +337,7 @@ $(window).on("load", () => {
           x: 0,
           y: 0,
           scale: 1,
-          rotation: (i) => (i - 1.5) * 5, // Return to fan
+          rotation: (i) => (i - 1.5) * 5,
           duration: 0.5,
           ease: "power2.inOut",
         });
@@ -200,7 +349,7 @@ $(window).on("load", () => {
       stack.on("mouseenter", () => {
         if (!container.data("expanded")) {
           gsap.to(images, {
-            rotation: (i) => (i - 1.5) * 12, // Fan out wider on hover
+            rotation: (i) => (i - 1.5) * 12,
             duration: 0.3,
           });
         }
@@ -208,7 +357,7 @@ $(window).on("load", () => {
       stack.on("mouseleave", () => {
         if (!container.data("expanded")) {
           gsap.to(images, {
-            rotation: (i) => (i - 1.5) * 5, // Reset fan
+            rotation: (i) => (i - 1.5) * 5,
             duration: 0.3,
           });
         }

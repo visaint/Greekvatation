@@ -56,7 +56,7 @@ header {
 }
 
 h1 {
-  font-size: clamp(2.5rem, 7vw, 10rem);
+  font-size: 8vw;
   line-height: 1;
   text-transform: uppercase;
   margin-bottom: 20px;
@@ -143,7 +143,7 @@ h1 {
 }
 
 .bottom_text h5 {
-  font-size: clamp(0.9rem, 3vw, 1.2rem);
+  font-size: 1.2rem;
   letter-spacing: 2px;
   text-transform: uppercase;
 }
@@ -156,10 +156,153 @@ h1 {
 }
 
 .transition-text h2 {
-  font-size: clamp(1.5rem, 4vw, 3rem);
+  font-size: 4vw;
   text-transform: uppercase;
   margin: 10px 0;
   color: #f4efe1;
+}
+
+/* --- BALLOON AND SPARKLE ANIMATIONS --- */
+.balloon-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 5;
+  overflow: hidden;
+}
+
+.balloon {
+  position: absolute;
+  width: 40px;
+  height: 52px;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  opacity: 0;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+}
+
+/* Blue balloon colors matching theme */
+.balloon-1 {
+  background: linear-gradient(135deg, #0047ab 0%, #0066cc 100%);
+}
+
+.balloon-2 {
+  background: linear-gradient(135deg, #00a3e0 0%, #0088cc 100%);
+}
+
+.balloon-3 {
+  background: linear-gradient(135deg, #3e4db3 0%, #5a67d8 100%);
+}
+
+/* Balloon string */
+.balloon::after {
+  content: "";
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  height: 30px;
+  background: rgba(0, 0, 124, 0.3);
+}
+
+/* Balloon highlight */
+.balloon::before {
+  content: "";
+  position: absolute;
+  top: 8px;
+  left: 12px;
+  width: 10px;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  filter: blur(2px);
+}
+
+/* Float animation */
+@keyframes float-up {
+  0% {
+    transform: translateY(0) translateX(0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.9;
+  }
+  90% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(-120vh) translateX(var(--drift))
+      rotate(var(--rotation));
+    opacity: 0;
+  }
+}
+
+/* Sparkles */
+.sparkle-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 6;
+  overflow: hidden;
+}
+
+.sparkle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: #ffd700;
+  clip-path: polygon(
+    50% 0%,
+    61% 35%,
+    98% 35%,
+    68% 57%,
+    79% 91%,
+    50% 70%,
+    21% 91%,
+    32% 57%,
+    2% 35%,
+    39% 35%
+  );
+  pointer-events: none;
+  opacity: 0;
+  filter: drop-shadow(0 0 3px #ffd700);
+}
+
+@keyframes sparkle-twinkle {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.5) rotate(180deg);
+  }
+}
+
+/* Confetti burst */
+.confetti {
+  position: absolute;
+  width: 8px;
+  height: 12px;
+  opacity: 0;
+}
+
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
 }
 
 /* --- MOBILE OPTIMIZATION --- */
@@ -185,7 +328,7 @@ h1 {
   }
 
   h1 {
-    font-size: clamp(2rem, 6vw, 4rem);
+    font-size: 48px;
   }
 
   .img_container {
@@ -202,8 +345,24 @@ h1 {
   }
 
   .transition-text h2 {
-    font-size: clamp(1.2rem, 3vw, 2rem);
+    font-size: 28px;
     color: #f4efe1;
+  }
+
+  /* Smaller balloons and sparkles on mobile */
+  .balloon {
+    width: 30px;
+    height: 40px;
+  }
+
+  .sparkle {
+    width: 6px;
+    height: 6px;
+  }
+
+  .confetti {
+    width: 6px;
+    height: 10px;
   }
 }
 
@@ -228,6 +387,11 @@ h1 {
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
+    }
+
+    .balloon-container,
+    .sparkle-container {
+      display: none;
     }
   }
 }
